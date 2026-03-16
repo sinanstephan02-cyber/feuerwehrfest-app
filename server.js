@@ -8,7 +8,7 @@ const session = require("express-session");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_PATH = path.join(__dirname, "data.db");
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "BitteUnbedingtAendern2026!";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Feuerwehr7013";
 
 const db = new sqlite3.Database(DB_PATH);
 
