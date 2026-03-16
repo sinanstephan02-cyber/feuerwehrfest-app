@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feuerwehrfest Bestell-App</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <strong>Feuerwehrfest Bestell-App</strong>
+      <div class="small light" id="userBar">Lade Benutzer...</div>
+    </div>
+    <nav>
+      <a href="/">Bestellung</a>
+      <a href="/admin-login">Admin</a>
+      <button id="logoutBtn" class="topbar-btn">Logout</button>
+    </nav>
+  </div>
+
+  <div class="container">
+    <div class="grid grid-2">
+      <div class="card">
+        <h1>Bestellung aufnehmen</h1>
+        <p class="small">50 feste Tische, Kellner-Login und direkte Übertragung an Küche und Getränke.</p>
+
+        <div class="hero-box">
+          <div>
+            <div class="small">Angemeldet als</div>
+            <div class="hero-value" id="currentWaiter">-</div>
+          </div>
+          <div>
+            <div class="small">Ausgewählter Tisch</div>
+            <div class="hero-value" id="selectedTableValue">-</div>
+          </div>
+        </div>
+
+        <h2>Tisch auswählen</h2>
+        <div id="tableGrid" class="table-grid table-grid-50"></div>
+
+        <label for="note">Notiz zur Bestellung</label>
+        <textarea id="note" rows="3" placeholder="z. B. ohne Senf oder im Außenbereich"></textarea>
+
+        <div class="message" id="message"></div>
+      </div>
+
+      <div class="card">
+        <h2>Artikel</h2>
+        <div id="menuContainer"></div>
+
+        <div class="footer-bar">
+          <div>
+            <div class="small">Gesamtsumme</div>
+            <div id="totalPrice" class="sum-value">0,00 €</div>
+          </div>
+          <div class="inline-actions">
+            <button id="resetBtn" class="btn-secondary">Zurücksetzen</button>
+            <button id="submitOrderBtn" class="btn-primary">Bestellung senden</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/static/common.js"></script>
+  <script src="/static/index.js"></script>
+</body>
+</html>

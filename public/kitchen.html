@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Küche</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <strong>Feuerwehrfest Bestell-App</strong>
+      <div class="small light" id="userBar">Küche</div>
+    </div>
+    <nav>
+      <a href="/kitchen">Küche</a>
+      <button id="logoutBtn" class="topbar-btn">Logout</button>
+    </nav>
+  </div>
+
+  <div class="container">
+    <div class="kpis" id="stats"></div>
+
+    <div class="card">
+      <div class="filters">
+        <button class="btn-secondary active" data-filter="offen">Offene Bestellungen</button>
+        <button class="btn-secondary" data-filter="all">Alle</button>
+        <button class="btn-secondary" data-filter="fertig">Nur fertig</button>
+      </div>
+      <div id="orders" class="order-list"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/static/common.js"></script>
+  <script src="/static/screen.js"></script>
+  <script>
+    initScreen({ targetCategory: 'Kueche', allowDelivered: true });
+  </script>
+</body>
+</html>
