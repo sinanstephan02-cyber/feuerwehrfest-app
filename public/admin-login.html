@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="card login-card">
+      <h1>Admin Login</h1>
+      <p class="muted">Nur mit dem separaten Admin-Passwort.</p>
+
+      <form id="adminLoginForm">
+        <label for="password">Admin-Passwort</label>
+        <input id="password" name="password" type="password" placeholder="Admin-Passwort" required />
+        <button type="submit">Anmelden</button>
+      </form>
+
+      <div id="message" class="alert"></div>
+      <p class="small muted" style="margin-top:14px;"><a href="/login">Zurück zum Benutzer-Login</a></p>
+    </div>
+  </div>
+  <script src="/assets/admin-login.js"></script>
+</body>
+</html>

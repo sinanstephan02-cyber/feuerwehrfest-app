@@ -1,0 +1,183 @@
+
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --border:#d7dce2;
+  --accent:#c62828;
+  --accent-dark:#8e1c1c;
+  --text:#1e2430;
+  --muted:#687282;
+  --green:#2e7d32;
+  --orange:#ef6c00;
+  --gray:#546e7a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+}
+.topbar{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.brand{font-weight:700;font-size:20px}
+.top-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.grid{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap:20px;
+}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+h1,h2,h3{margin:0 0 14px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.login-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.login-card{
+  width:100%;
+  max-width:560px;
+}
+input,select,textarea,button{
+  font:inherit;
+}
+input,select,textarea{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  margin-top:6px;
+}
+textarea{min-height:90px;resize:vertical}
+button{
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+button:hover{background:var(--accent-dark)}
+button.secondary{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
+}
+button.success{background:var(--green)}
+button.warn{background:var(--orange)}
+button.neutral{background:var(--gray)}
+label{display:block; margin:12px 0 6px; font-weight:700}
+.info-box{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin:14px 0;
+}
+.table-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(74px,1fr));
+  gap:10px;
+}
+.table-btn{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 8px;
+  text-align:center;
+  font-weight:700;
+}
+.table-btn.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.menu-section{margin-top:16px}
+.menu-row{
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  gap:10px;
+  align-items:center;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  background:#fff;
+}
+.qty-input{width:80px}
+.pill{
+  display:inline-block;
+  background:#eef2f6;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:12px;
+  color:#364152;
+}
+.kitchen{background:#f8fafc}
+.order{
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  padding:16px;
+  margin-bottom:14px;
+}
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.item{
+  border-top:1px solid #edf1f4;
+  padding:10px 0;
+}
+.status{
+  display:inline-block;
+  border-radius:999px;
+  padding:5px 10px;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+}
+.status-neu{background:var(--accent)}
+.status-inarbeit{background:var(--orange)}
+.status-fertig{background:var(--green)}
+.actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.small{font-size:13px}
+.table-like{width:100%; border-collapse:collapse}
+.table-like th,.table-like td{
+  border-bottom:1px solid var(--border);
+  padding:10px 8px;
+  text-align:left;
+}
+.alert{padding:12px 14px;border-radius:10px;margin-top:12px;display:none}
+.alert.error{background:#fdecea;color:#b42318;display:block}
+.alert.success{background:#ecfdf3;color:#067647;display:block}
+.nav-links{display:flex; gap:10px; flex-wrap:wrap}
+.nav-links a{color:var(--accent); text-decoration:none; font-weight:700}

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feuerwehrfest Login</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="card login-card">
+      <h1>Feuerwehrfest Login</h1>
+      <p class="muted">Melde dich mit deinem Benutzer an. Bei Bestellungen wird dann automatisch gespeichert, wer bedient hat.</p>
+
+      <div class="info-box">
+        <strong>Standard-Zugänge nach dem ersten Start:</strong>
+        <p>Kellner: <span class="pill">kellner01</span> bis <span class="pill">kellner30</span></p>
+        <p>Küche: <span class="pill">kueche</span></p>
+        <p>Getränke: <span class="pill">getraenke</span></p>
+        <p>Standard-Passwort: <span class="pill">feuerwehr123</span></p>
+      </div>
+
+      <form id="loginForm">
+        <label for="username">Benutzername</label>
+        <input id="username" name="username" placeholder="z. B. kellner01" required />
+
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" placeholder="Passwort" required />
+
+        <button type="submit">Anmelden</button>
+      </form>
+
+      <div id="message" class="alert"></div>
+
+      <p class="small muted" style="margin-top:14px;">
+        Admin separat: <a href="/admin-login">Admin-Login</a>
+      </p>
+    </div>
+  </div>
+  <script src="/assets/login.js"></script>
+</body>
+</html>

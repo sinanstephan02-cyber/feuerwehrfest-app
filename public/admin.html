@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Admin</div>
+    <div class="top-actions">
+      <button class="secondary" id="logoutBtn">Admin Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <h2>Tischzahl</h2>
+        <label for="tableCount">Anzahl Tische</label>
+        <input id="tableCount" type="number" min="1" max="200" />
+        <button id="saveTablesBtn" type="button">Speichern</button>
+        <div id="tableMsg" class="alert"></div>
+      </div>
+
+      <div class="card">
+        <h2>Neuen Benutzer anlegen</h2>
+        <label for="newUsername">Benutzername</label>
+        <input id="newUsername" />
+        <label for="newPassword">Passwort</label>
+        <input id="newPassword" type="password" />
+        <label for="newRole">Rolle</label>
+        <select id="newRole">
+          <option value="waiter">Kellner</option>
+          <option value="kitchen">Küche</option>
+          <option value="drinks">Getränke</option>
+        </select>
+        <button id="saveUserBtn" type="button">Benutzer speichern</button>
+        <div id="userMsg" class="alert"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <h2>Artikel</h2>
+      <div class="grid">
+        <div>
+          <label for="itemName">Name</label>
+          <input id="itemName" />
+        </div>
+        <div>
+          <label for="itemPrice">Preis</label>
+          <input id="itemPrice" type="number" step="0.01" />
+        </div>
+      </div>
+      <label for="itemStation">Bereich</label>
+      <select id="itemStation">
+        <option value="kitchen">Küche</option>
+        <option value="drinks">Getränke</option>
+      </select>
+      <button id="saveItemBtn" type="button" style="margin-top:12px">Artikel anlegen</button>
+      <div id="itemMsg" class="alert"></div>
+
+      <table class="table-like" style="margin-top:20px">
+        <thead>
+          <tr><th>Name</th><th>Preis</th><th>Bereich</th><th>Aktiv</th><th>Aktion</th></tr>
+        </thead>
+        <tbody id="menuTable"></tbody>
+      </table>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <div class="card">
+        <h2>Benutzer</h2>
+        <table class="table-like">
+          <thead><tr><th>Benutzer</th><th>Rolle</th></tr></thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Bestellungen pro Kellner</h2>
+        <table class="table-like">
+          <thead><tr><th>Benutzer</th><th>Bestellungen</th></tr></thead>
+          <tbody id="statsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/admin.js"></script>
+</body>
+</html>

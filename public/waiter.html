@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bestellung aufnehmen</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Feuerwehrfest Bestell-App</div>
+    <div class="top-actions">
+      <div id="who" class="pill">Lade Benutzer...</div>
+      <div class="nav-links">
+        <a href="/admin-login">Admin</a>
+      </div>
+      <button class="secondary" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <h1>Bestellung aufnehmen</h1>
+        <p class="muted">50 feste Tische, Kellner-Login und direkte Übertragung an Küche und Getränke.</p>
+
+        <p><strong>Angemeldet als</strong><br><span id="waiterName">-</span></p>
+        <p><strong>Ausgewählter Tisch</strong><br><span id="selectedTableLabel">-</span></p>
+
+        <div class="menu-section">
+          <h2>Tisch auswählen</h2>
+          <div id="tables" class="table-grid"></div>
+        </div>
+
+        <label for="note">Notiz zur Bestellung</label>
+        <textarea id="note" placeholder="z. B. ohne Senf oder im Außenbereich"></textarea>
+      </div>
+
+      <div class="card">
+        <h2>Artikel</h2>
+        <div id="menu"></div>
+        <h3>Gesamtsumme</h3>
+        <p id="total">0,00 €</p>
+        <div class="actions">
+          <button class="secondary" id="resetBtn" type="button">Zurücksetzen</button>
+          <button id="submitBtn" type="button">Bestellung senden</button>
+        </div>
+        <div id="message" class="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/waiter.js"></script>
+</body>
+</html>

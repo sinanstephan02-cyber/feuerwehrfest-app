@@ -1,0 +1,15 @@
+{
+  "name": "feuerwehrfest-bestellapp",
+  "version": "3.0.0",
+  "description": "Feuerwehrfest Bestell-App sauber neu aufgebaut",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^4.19.2",
+    "express-session": "^1.18.1",
+    "sqlite3": "^5.1.7"
+  }
+}
