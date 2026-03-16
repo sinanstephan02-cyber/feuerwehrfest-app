@@ -531,7 +531,32 @@ io.on('connection', async socket => {
 });
 
 initDb().then(() => {
-  server.listen(PORT, () => {
+ app.get("/setup", async (req, res) => {
+  const bcrypt = require("bcryptjs");
+  const passwordHash = await bcrypt.hash("feuerwehr123", 10);
+
+  for (let i = 1; i <= 30; i++) {
+    const username = "kellner" + String(i).padStart(2, "0");
+
+    db.run(
+      "INSERT OR IGNORE INTO users (username, password_hash, role, active) VALUES (?, ?, ?, 1)",
+      [username, passwordHash, "waiter"]
+    );
+  }
+
+  db.run(
+    "INSERT OR IGNORE INTO users (username, password_hash, role, active) VALUES (?, ?, ?, 1)",
+    ["kueche", passwordHash, "kitchen"]
+  );
+
+  db.run(
+    "INSERT OR IGNORE INTO users (username, password_hash, role, active) VALUES (?, ?, ?, 1)",
+    ["getraenke", passwordHash, "drinks"]
+  );
+
+  res.send("Standard-Benutzer erstellt");
+}); 
+server.listen(PORT, () => {
     console.log(`Server laeuft auf http://localhost:${PORT}`);
   });
 }).catch(error => {
