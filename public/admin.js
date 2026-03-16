@@ -12,12 +12,21 @@ async function loadAll() {
 
   const users = await (await fetch("/api/admin/users")).json();
   document.getElementById("usersTable").innerHTML = users.map(u => `
-    <tr><td>${u.username}</td><td>${u.role}</td></tr>
+    <tr>
+      <td>${u.username}</td>
+      <td>${u.role === "waiter" ? "Kellner" : u.role === "kitchen" ? "Küche" : "Getränke"}</td>
+      <td>${u.orders_count || 0}</td>
+      <td>${Number(u.revenue || 0).toLocaleString("de-DE", { style: "currency", currency: "EUR" })}</td>
+      <td>
+        <button class="secondary edit-user-btn" type="button" data-id="${u.id}" data-username="${u.username}" data-role="${u.role}">Bearbeiten</button>
+        ${u.role === "waiter" ? `<button class="secondary delete-user-btn" type="button" data-id="${u.id}" data-username="${u.username}">Löschen</button>` : ""}
+      </td>
+    </tr>
   `).join("");
 
   const stats = await (await fetch("/api/admin/stats")).json();
   document.getElementById("statsTable").innerHTML = stats.map(s => `
-    <tr><td>${s.waiter_username}</td><td>${s.orders_count}</td></tr>
+    <tr><td>${s.waiter_username}</td><td>${s.orders_count}</td><td>${Number(s.revenue || 0).toLocaleString("de-DE", { style: "currency", currency: "EUR" })}</td></tr>
   `).join("");
 
   const menu = await (await fetch("/api/admin/menu")).json();
@@ -46,6 +55,38 @@ async function loadAll() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, price, station, active })
       });
+      loadAll();
+    });
+  });
+
+
+  document.querySelectorAll(".edit-user-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const username = prompt("Neuer Benutzername", btn.dataset.username);
+      if (!username) return;
+      const role = prompt("Rolle: waiter, kitchen oder drinks", btn.dataset.role);
+      if (!role) return;
+      const password = prompt("Neues Passwort (leer lassen = altes Passwort behalten)", "");
+
+      const res = await fetch(`/api/admin/users/${btn.dataset.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, role, password })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return show("userMsg", "error", data.error || "Benutzer konnte nicht geändert werden.");
+      show("userMsg", "success", "Benutzer geändert.");
+      loadAll();
+    });
+  });
+
+  document.querySelectorAll(".delete-user-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if (!confirm(`Kellner ${btn.dataset.username} wirklich löschen?`)) return;
+      const res = await fetch(`/api/admin/users/${btn.dataset.id}`, { method: "DELETE" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return show("userMsg", "error", data.error || "Benutzer konnte nicht gelöscht werden.");
+      show("userMsg", "success", "Kellner gelöscht.");
       loadAll();
     });
   });

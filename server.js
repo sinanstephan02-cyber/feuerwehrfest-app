@@ -8,7 +8,7 @@ const session = require("express-session");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_PATH = path.join(__dirname, "data.db");
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Feuerwehr7013";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "BitteUnbedingtAendern2026!";
 
 const db = new sqlite3.Database(DB_PATH);
 
@@ -403,7 +403,19 @@ app.patch("/api/admin/menu/:id", requireAdmin, async (req, res) => {
 });
 
 app.get("/api/admin/users", requireAdmin, async (req, res) => {
-  const rows = await all(`SELECT id, username, role FROM users ORDER BY role, username`);
+  const rows = await all(`
+    SELECT
+      u.id,
+      u.username,
+      u.role,
+      COALESCE(COUNT(DISTINCT o.id), 0) AS orders_count,
+      COALESCE(ROUND(SUM(oi.quantity * oi.price), 2), 0) AS revenue
+    FROM users u
+    LEFT JOIN orders o ON o.waiter_username = u.username
+    LEFT JOIN order_items oi ON oi.order_id = o.id
+    GROUP BY u.id, u.username, u.role
+    ORDER BY u.role, u.username
+  `);
   res.json(rows);
 });
 
@@ -425,12 +437,66 @@ app.post("/api/admin/users", requireAdmin, async (req, res) => {
   }
 });
 
+app.patch("/api/admin/users/:id", requireAdmin, async (req, res) => {
+  const id = Number(req.params.id);
+  const { username, password, role } = req.body;
+  if (!id || !username || !role) return res.status(400).json({ error: "Fehlende Daten" });
+
+  const current = await get(`SELECT * FROM users WHERE id = ?`, [id]);
+  if (!current) return res.status(404).json({ error: "Benutzer nicht gefunden" });
+  if (!["waiter", "kitchen", "drinks"].includes(role)) {
+    return res.status(400).json({ error: "Ungültige Rolle" });
+  }
+
+  try {
+    if (password && password.trim()) {
+      const hash = await bcrypt.hash(password.trim(), 10);
+      await run(
+        `UPDATE users SET username = ?, password_hash = ?, role = ? WHERE id = ?`,
+        [username.trim(), hash, role, id]
+      );
+    } else {
+      await run(
+        `UPDATE users SET username = ?, role = ? WHERE id = ?`,
+        [username.trim(), role, id]
+      );
+    }
+
+    if (current.username !== username.trim()) {
+      await run(`UPDATE orders SET waiter_username = ? WHERE waiter_username = ?`, [username.trim(), current.username]);
+    }
+
+    res.json({ ok: true });
+  } catch (err) {
+    if (String(err.message).includes("UNIQUE")) {
+      return res.status(400).json({ error: "Benutzername existiert bereits" });
+    }
+    throw err;
+  }
+});
+
+app.delete("/api/admin/users/:id", requireAdmin, async (req, res) => {
+  const id = Number(req.params.id);
+  const current = await get(`SELECT * FROM users WHERE id = ?`, [id]);
+  if (!current) return res.status(404).json({ error: "Benutzer nicht gefunden" });
+  if (current.role !== "waiter") {
+    return res.status(400).json({ error: "Nur Kellner können gelöscht werden" });
+  }
+
+  await run(`DELETE FROM users WHERE id = ?`, [id]);
+  res.json({ ok: true });
+});
+
 app.get("/api/admin/stats", requireAdmin, async (req, res) => {
   const rows = await all(`
-    SELECT waiter_username, COUNT(*) AS orders_count
-    FROM orders
-    GROUP BY waiter_username
-    ORDER BY orders_count DESC, waiter_username ASC
+    SELECT
+      o.waiter_username,
+      COUNT(DISTINCT o.id) AS orders_count,
+      COALESCE(ROUND(SUM(oi.quantity * oi.price), 2), 0) AS revenue
+    FROM orders o
+    LEFT JOIN order_items oi ON oi.order_id = o.id
+    GROUP BY o.waiter_username
+    ORDER BY revenue DESC, orders_count DESC, o.waiter_username ASC
   `);
   res.json(rows);
 });
